@@ -25,6 +25,7 @@ class BooksController < ApplicationController
   def show
     @books = Book.all
     @book = Book.find(params[:id])
+    @favorite = Favorite.new
     @user = @book.user
   end
 

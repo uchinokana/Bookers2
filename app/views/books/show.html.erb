@@ -29,6 +29,33 @@
             <% end %>
           </tr>
         </div>
+        <% if @book.iined_by?(current_user) %>
+        <p>
+          <%= link_to book_iines_path(@book), method: :delete do %>
+          ♥<%= @book.iines.count %> いいね
+          <% end %>
+        </p>
+        <% else %>
+        <p>
+          <%= link_to book_iines_path(@book), method: :post do %>
+          ♡<%= @book.iines.count %>
+          <% end %>
+        </p>
+        <% end %>
+        <div>
+  <p>コメント件数：<%= @book.favorites.count %></p>
+  <% @book.favorites.each do |favorite| %>
+    <p><%= image_tag favorite.user.get_book(100,100) %></p>
+    <%= favorite.user.name %>
+    <%= favorite.created_at.strftime('%Y/%m/%d') %><%= favorite.comment %>
+  <% end %>
+</div>
+<div>
+  <%= form_with model: [@book, @favorite] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
       </table>
     </div>
   </div>
